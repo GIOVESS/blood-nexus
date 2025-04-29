@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+.grecaptcha-badge {
+  opacity: 0 !important;
+}
+
+:root {
+  --header-height: 84px;
+}
+@media (min-width: 768px) {
+  :root {
+    --header-height: 116px;
+  }
+}

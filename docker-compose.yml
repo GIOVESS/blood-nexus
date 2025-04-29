@@ -1,0 +1,12 @@
+services:
+  postgres:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_USER: postgres
+      POSTGRES_DB: bloodnexus
+    ports:
+      - '7649:5432'
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
