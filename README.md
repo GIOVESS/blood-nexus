@@ -52,13 +52,13 @@ Create a `.env` file in the root directory with the following variables:
 
 **Database**
 ```
-DATABASE_URL="postgresql://postgres:postgrespassword@localhost:7649/bloodnexus"
+DATABASE_URL="postgresql://postgres:giovess@localhost:5432/blood_nexus?schema=public"
 ```
 
 **NextAuth**
 ```
-NEXTAUTH_URL="http://localhost:3000"
-NEXTAUTH_SECRET="your-nextauth-secret"
+NEXTAUTH_SECRET="e8b5d2f1a7c6e4b0d9f3a2c5e7b1d4f6a9c3e5d8b2f4a1c6e9d3b5f8a2c4e7d1b3"
+NEXTAUTH_URL="http://localhost:3000" 
 ```
 
 **Google**
