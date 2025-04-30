@@ -123,9 +123,9 @@ export async function PATCH(
         },
         address: {
           select: {
-            division: true,
-            district: true,
-            upazila: true,
+            county: true,
+            subCounty: true,
+            ward: true,
             streetAddress: true,
             postalCode: true
           }

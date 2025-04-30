@@ -4,10 +4,10 @@ const formatAddress = (address: Address): string => {
   const components = [
     address.label,
     address.streetAddress,
-    address.upazila,
-    address.district,
-    address.division,
-    address.postalCode
+    address.postalCode,
+    address.ward,
+    address.subCounty,
+    address.county
   ]
 
   return components

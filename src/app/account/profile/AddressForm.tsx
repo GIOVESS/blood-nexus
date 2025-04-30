@@ -20,26 +20,26 @@ type FieldConfig = {
   rows?: number
 }
 
-const divisionOptions = counties.map((division) => ({
-  id: division.id,
-  label: division.name
+const countyOptions = counties.map((county) => ({
+  id: county.id,
+  label: county.name
 }))
 
-const getDistrictOptions = (divisionId: string) => {
+const getSubCountyOptions = (countyId: string) => {
   return subCounties
-    .filter((district) => district.division_id === divisionId)
-    .map((district) => ({
-      id: district.id,
-      label: district.name
+    .filter((subCounty) => subCounty.countyId === countyId)
+    .map((subCounty) => ({
+      id: subCounty.id,
+      label: subCounty.name
     }))
 }
 
-const getUpazilaOptions = (districtId: string) => {
+const getWardOptions = (subCountyId: string) => {
   return wards
-    .filter((upazila) => upazila.district_id === districtId)
-    .map((upazila) => ({
-      id: upazila.id,
-      label: upazila.name
+    .filter((ward) => ward.subCountyId === subCountyId)
+    .map((ward) => ({
+      id: ward.id,
+      label: ward.name
     }))
 }
 
@@ -109,26 +109,26 @@ const LocationFields = ({
   control: Control<AddressInput>
   errors: FieldErrors<AddressInput>
 }) => {
-  const division = useWatch({
+  const county = useWatch({
     control,
-    name: 'division'
+    name: 'county'
   })
-  const district = useWatch({
+  const subCounty = useWatch({
     control,
-    name: 'district'
+    name: 'subCounty'
   })
 
-  const districtOptions = division ? getDistrictOptions(division) : []
-  const upazilaOptions = district ? getUpazilaOptions(district) : []
+  const subCountyOptions = county ? getSubCountyOptions(county) : []
+  const wardOptions = subCounty ? getWardOptions(subCounty) : []
 
   return (
     <>
       <SelectElement
-        name="division"
+        name="county"
         control={control}
-        label="Division"
-        options={divisionOptions}
-        helperText={errors.division?.message}
+        label="County"
+        options={countyOptions}
+        helperText={errors.county?.message}
         fullWidth={true}
         slotProps={{
           ...commonTextFieldProps.slotProps,
@@ -136,19 +136,19 @@ const LocationFields = ({
             displayEmpty: true,
             renderValue: (value: unknown) => {
               if (!value) return 'Select one'
-              const option = divisionOptions.find((opt) => opt.id === value)
+              const option = countyOptions.find((opt) => opt.id === value)
               return option?.label || String(value)
             }
           }
         }}
       />
       <SelectElement
-        name="district"
+        name="subCounty"
         control={control}
-        label="District"
-        options={districtOptions}
-        disabled={!division}
-        helperText={errors.district?.message}
+        label="SubCounty"
+        options={subCountyOptions}
+        disabled={!county}
+        helperText={errors.subCounty?.message}
         fullWidth={true}
         slotProps={{
           ...commonTextFieldProps.slotProps,
@@ -156,19 +156,19 @@ const LocationFields = ({
             displayEmpty: true,
             renderValue: (value: unknown) => {
               if (!value) return 'Select one'
-              const option = districtOptions.find((opt) => opt.id === value)
+              const option = subCountyOptions.find((opt) => opt.id === value)
               return option?.label || String(value)
             }
           }
         }}
       />
       <SelectElement
-        name="upazila"
+        name="ward"
         control={control}
-        label="Upazila"
-        options={upazilaOptions}
-        disabled={!district}
-        helperText={errors.upazila?.message}
+        label="Ward"
+        options={wardOptions}
+        disabled={!subCounty}
+        helperText={errors.ward?.message}
         fullWidth={true}
         slotProps={{
           ...commonTextFieldProps.slotProps,
@@ -191,9 +191,9 @@ const AddressForm = ({
   const initialAddress: AddressInput = {
     label: initial?.label || '',
     type: initial?.type || 'OTHER',
-    division: initial?.division || '',
-    district: initial?.district || '',
-    upazila: initial?.upazila || '',
+    county: initial?.county || '',
+    subCounty: initial?.subCounty || '',
+    ward: initial?.ward || '',
     streetAddress: initial?.streetAddress || '',
     postalCode: initial?.postalCode || '',
     landmark: initial?.landmark || '',

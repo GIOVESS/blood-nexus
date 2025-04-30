@@ -31,7 +31,7 @@ type ExtendedBloodDonationRequest = BloodDonationRequest & {
   donor: Pick<User, 'name' | 'email' | 'phone'> | null
   address: Pick<
     Address,
-    'division' | 'district' | 'upazila' | 'streetAddress' | 'postalCode'
+    'county' | 'subCounty' | 'ward' | 'streetAddress' | 'postalCode'
   >
 }
 
@@ -195,7 +195,7 @@ const ManageRequests = () => {
                     {format(new Date(request.requiredOn), 'PPP')}
                   </TableCell>
                   <TableCell>
-                    {request.address.division}, {request.address.district}
+                    {request.address.county}, {request.address.subCounty}
                   </TableCell>
                   <TableCell>
                     {request.requester?.name || 'Anonymous'}

@@ -18,9 +18,9 @@ type RequesterDonorSelect = {
 }
 
 type AddressSelect = {
-  division: string
-  district: string
-  upazila: string
+  county: string
+  subCounty: string
+  ward: string
   streetAddress: string | null
   postalCode: string | null
 }
@@ -102,9 +102,9 @@ export async function GET(
         },
         address: {
           select: {
-            division: true,
-            district: true,
-            upazila: true,
+            county: true,
+            subCounty: true,
+            ward: true,
             streetAddress: true,
             postalCode: true
           }

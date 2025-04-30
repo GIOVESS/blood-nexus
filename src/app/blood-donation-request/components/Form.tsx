@@ -15,7 +15,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 import dayjs from 'dayjs'
 import { z } from 'zod'
 import { IoArrowBack, IoArrowForward, IoSend } from 'react-icons/io5'
-import { divisions, districts, upazillas } from 'bd-geojs'
+import { counties, subCounties, wards } from '@/data/kenya-geo'
 import { useWatch } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { DonationRequestInfo } from '@/types/donation-request'
@@ -45,26 +45,26 @@ type FieldConfig = {
   }
 }
 
-const divisionOptions = divisions.map((division) => ({
-  id: division.id,
-  label: division.name
+const countyOptions = counties.map((county) => ({
+  id: county.id,
+  label: county.name
 }))
 
-const getDistrictOptions = (divisionId: string) => {
-  return districts
-    .filter((district) => district.division_id === divisionId)
-    .map((district) => ({
-      id: district.id,
-      label: district.name
+const getSubCountyOptions = (countyId: string) => {
+  return subCounties
+    .filter((subCounty) => subCounty.countyId === countyId)
+    .map((subCounty) => ({
+      id: subCounty.id,
+      label: subCounty.name
     }))
 }
 
-const getUpazilaOptions = (districtId: string) => {
-  return upazillas
-    .filter((upazila) => upazila.district_id === districtId)
-    .map((upazila) => ({
-      id: upazila.id,
-      label: upazila.name
+const getWardOptions = (subCountyId: string) => {
+  return wards
+    .filter((ward) => ward.subCountyId === subCountyId)
+    .map((ward) => ({
+      id: ward.id,
+      label: ward.name
     }))
 }
 
@@ -136,26 +136,26 @@ const LocationFields = ({
   control: Control<BloodDonationRequestFormInput>
   errors: FieldErrors<BloodDonationRequestFormInput>
 }) => {
-  const division = useWatch({
+  const county = useWatch({
     control,
-    name: 'address.division'
+    name: 'address.county'
   })
-  const district = useWatch({
+  const subCounty = useWatch({
     control,
-    name: 'address.district'
+    name: 'address.subCounty'
   })
 
-  const districtOptions = division ? getDistrictOptions(division) : []
-  const upazilaOptions = district ? getUpazilaOptions(district) : []
+  const subCountyOptions = county ? getSubCountyOptions(county) : []
+  const wardOptions = subCounty ? getWardOptions(subCounty) : []
 
   return (
     <>
       <SelectElement
-        name="address.division"
+        name="address.county"
         control={control}
-        label="Division"
-        options={divisionOptions}
-        helperText={errors.address?.division?.message}
+        label="County"
+        options={countyOptions}
+        helperText={errors.address?.county?.message}
         fullWidth={true}
         slotProps={{
           ...commonTextFieldProps.slotProps,
@@ -164,19 +164,19 @@ const LocationFields = ({
             displayEmpty: true,
             renderValue: (value: unknown) => {
               if (!value) return 'Select one'
-              const option = divisionOptions.find((opt) => opt.id === value)
+              const option = countyOptions.find((opt) => opt.id === value)
               return option?.label || String(value)
             }
           }
         }}
       />
       <SelectElement
-        name="address.district"
+        name="address.subCounty"
         control={control}
-        label="District"
-        options={districtOptions}
-        disabled={!division}
-        helperText={errors.address?.district?.message}
+        label="SubCounty"
+        options={subCountyOptions}
+        disabled={!county}
+        helperText={errors.address?.subCounty?.message}
         fullWidth={true}
         slotProps={{
           ...commonTextFieldProps.slotProps,
@@ -184,19 +184,19 @@ const LocationFields = ({
             displayEmpty: true,
             renderValue: (value: unknown) => {
               if (!value) return 'Select one'
-              const option = districtOptions.find((opt) => opt.id === value)
+              const option = subCountyOptions.find((opt) => opt.id === value)
               return option?.label || String(value)
             }
           }
         }}
       />
       <SelectElement
-        name="address.upazila"
+        name="address.ward"
         control={control}
-        label="Upazila"
-        options={upazilaOptions}
-        disabled={!district}
-        helperText={errors.address?.upazila?.message}
+        label="Ward"
+        options={wardOptions}
+        disabled={!subCounty}
+        helperText={errors.address?.ward?.message}
         fullWidth={true}
         slotProps={{
           ...commonTextFieldProps.slotProps,
@@ -204,7 +204,7 @@ const LocationFields = ({
             displayEmpty: true,
             renderValue: (value: unknown) => {
               if (!value) return 'Select one'
-              const option = upazilaOptions.find((opt) => opt.id === value)
+              const option = wardOptions.find((opt) => opt.id === value)
               return option?.label || String(value)
             }
           }
@@ -616,9 +616,9 @@ const BloodDonationRequestForm = ({
       address: {
         label: requestInfo?.address?.label || '',
         type: requestInfo?.address?.type || 'OTHER',
-        division: requestInfo?.address?.division || '',
-        district: requestInfo?.address?.district || '',
-        upazila: requestInfo?.address?.upazila || '',
+        county: requestInfo?.address?.county || '',
+        subCounty: requestInfo?.address?.subCounty || '',
+        ward: requestInfo?.address?.ward || '',
         streetAddress: requestInfo?.address?.streetAddress || '',
         postalCode: requestInfo?.address?.postalCode || '',
         landmark: requestInfo?.address?.landmark || '',

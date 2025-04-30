@@ -87,9 +87,9 @@ describe('Database Implementation Tests', () => {
         data: {
           label: 'Test Address',
           type: 'HOSPITAL',
-          division: 'Test Division',
-          district: 'Test District',
-          upazila: 'Test Upazila'
+          county: 'Test County',
+          subCounty: 'Test SubCounty',
+          ward: 'Test Ward'
         }
       })
 
@@ -278,9 +278,9 @@ describe('Database Implementation Tests', () => {
         data: {
           label: 'Test Address for Integrity',
           type: 'HOSPITAL',
-          division: 'Test Division',
-          district: 'Test District',
-          upazila: 'Test Upazila'
+          county: 'Test County',
+          subCounty: 'Test SubCounty',
+          ward: 'Test Ward'
         }
       })
 

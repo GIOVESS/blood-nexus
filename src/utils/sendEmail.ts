@@ -45,15 +45,18 @@ const sendEmail = async ({
   }
 
   return new Promise((resolve, reject) => {
-    transport.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.error(error)
-        reject(new Error('Failed to send email'))
-      } else {
-        console.log('Email sent:', info.response)
-        resolve()
+    transport.sendMail(
+      mailOptions,
+      (error: Error | null, info: any) => {
+        if (error) {
+          console.error(error)
+          reject(new Error('Failed to send email'))
+        } else {
+          console.log('Email sent:', info.response)
+          resolve()
+        }
       }
-    })
+    )
   })
 }
 

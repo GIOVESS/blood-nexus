@@ -4,9 +4,12 @@ import { AddressType } from '@prisma/client'
 import { counties, subCounties, wards } from '@/data/kenya-geo'
 
 type NormalizedAddress = AddressInput & {
-  divisionId: string
-  districtId: string
-  upazilaId: string
+  county: string
+  countyId: string
+  subCounty: string
+  subCountyId: string
+  ward: string
+  wardId: string
 }
 
 const normalizeAddress = (result: PlaceDetailsResponse): NormalizedAddress => {
@@ -17,12 +20,12 @@ const normalizeAddress = (result: PlaceDetailsResponse): NormalizedAddress => {
       : result.types?.find((type) => type === 'blood_bank')
         ? AddressType.BLOOD_BANK
         : AddressType.OTHER,
-    division: '',
-    divisionId: '',
-    district: '',
-    districtId: '',
-    upazila: '',
-    upazilaId: '',
+    county: '',
+    countyId: '',
+    subCounty: '',
+    subCountyId: '',
+    ward: '',
+    wardId: '',
     streetAddress: '',
     postalCode: '',
     landmark: result.name ?? '',
@@ -32,32 +35,32 @@ const normalizeAddress = (result: PlaceDetailsResponse): NormalizedAddress => {
   result.address_components?.forEach((component: GeocoderAddressComponent) => {
     console.log(component.long_name)
     if (
-      component.long_name.includes('Division') ||
+      component.long_name.includes('County') ||
       component.types.includes('administrative_area_level_1')
     ) {
-      address.divisionId =
-        counties.find((division) =>
-          component.long_name.includes(division.name)
+      address.countyId =
+        counties.find((county) =>
+          component.long_name.includes(county.name)
         )?.id ?? ''
-      address.division = component.long_name.replace('Division', '').trim()
+      address.county = component.long_name.replace('County', '').trim()
     } else if (
-      component.long_name.includes('District') ||
+      component.long_name.includes('SubCounty') ||
       component.types.includes('administrative_area_level_2')
     ) {
-      address.districtId =
-        subCounties.find((district) =>
-          component.long_name.includes(district.name)
+      address.subCountyId =
+        subCounties.find((subCounty) =>
+          component.long_name.includes(subCounty.name)
         )?.id ?? ''
-      address.district = component.long_name.replace('District', '').trim()
+      address.subCounty = component.long_name.replace('SubCounty', '').trim()
     } else if (
-      component.long_name.includes('Upazila') ||
+      component.long_name.includes('Ward') ||
       component.types.includes('sublocality')
     ) {
-      address.upazilaId =
-        wards.find((upazila) => component.long_name.includes(upazila.name))
+      address.wardId =
+        wards.find((ward) => component.long_name.includes(ward.name))
           ?.id ?? ''
-      if (address.upazilaId) {
-        address.upazila = component.long_name.replace('Upazila', '').trim()
+      if (address.wardId) {
+        address.ward = component.long_name.replace('Ward', '').trim()
       }
     } else if (
       component.long_name.includes('Postal Code') ||

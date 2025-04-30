@@ -73,9 +73,9 @@ export const updateProfileSchema = z.object({
     .object({
       label: z.string(),
       type: z.nativeEnum(AddressType).default('OTHER'),
-      division: z.string(),
-      district: z.string(),
-      upazila: z.string(),
+      county: z.string(),
+      subCounty: z.string(),
+      ward: z.string(),
       streetAddress: z.string().nullable().optional(),
       postalCode: z.string().nullable().optional(),
       landmark: z.string().nullable().optional(),

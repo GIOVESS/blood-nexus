@@ -93,7 +93,7 @@ async function RecentRequests() {
         select: { name: true }
       },
       address: {
-        select: { division: true, district: true }
+        select: { county: true, subCounty: true }
       }
     }
   })
@@ -116,7 +116,7 @@ async function RecentRequests() {
               <TableCell>{request.requester?.name || 'Anonymous'}</TableCell>
               <TableCell>{request.bloodGroup.replace('_', ' ')}</TableCell>
               <TableCell>
-                {request.address.division}, {request.address.district}
+                {request.address.county}, {request.address.subCounty}
               </TableCell>
               <TableCell>{request.status}</TableCell>
               <TableCell>

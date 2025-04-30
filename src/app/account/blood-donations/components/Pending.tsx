@@ -155,8 +155,8 @@ const PendingRequests = () => {
             <div className="flex items-center gap-1 mb-1">
               <LocationOnIcon color="action" />
               <Typography variant="body1">
-                {request.bloodDonationRequest.address.division},{' '}
-                {request.bloodDonationRequest.address.district}
+                {request.bloodDonationRequest.address.county},{' '}
+                {request.bloodDonationRequest.address.subCounty}
               </Typography>
             </div>
 

@@ -48,14 +48,14 @@ export const AddressSchema = z.object({
     required_error: 'Label is required'
   }),
   type: z.nativeEnum(AddressType).default('OTHER'),
-  division: z.string({
-    required_error: 'Division is required'
+  county: z.string({
+    required_error: 'County is required'
   }),
-  district: z.string({
-    required_error: 'District is required'
+  subCounty: z.string({
+    required_error: 'SubCounty is required'
   }),
-  upazila: z.string({
-    required_error: 'Upazila is required'
+  ward: z.string({
+    required_error: 'Ward is required'
   }),
   streetAddress: z.string().optional(),
   postalCode: z.string().optional(),

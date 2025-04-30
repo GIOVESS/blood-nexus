@@ -137,29 +137,29 @@ model Patient {
 }
 
 model Address {
-  id                    Int                    @id @default(autoincrement())
-  label                 String
-  type                  AddressType            @default(OTHER)
-  division              String
-  divisionId           String?
-  district              String
-  districtId           String?
-  upazila               String
-  upazilaId             String?
-  streetAddress         String?
-  postalCode            String?
-  landmark              String?
-  latitude              Float?
-  longitude             Float?
-  instructions          String?
-  createdAt             DateTime               @default(now())
-  updatedAt             DateTime               @updatedAt
-  googlePlaceId         String?
-  googlePlaceDetails    Json?
+  id            Int      @id @default(autoincrement())
+  label         String
+  type          AddressType @default(OTHER)
+  county        String
+  countyId      String?
+  subCounty     String
+  subCountyId   String?
+  ward          String
+  wardId        String?
+  streetAddress String?
+  postalCode    String?
+  landmark      String?
+  latitude      Float?
+  longitude     Float?
+  instructions  String?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  googlePlaceId      String?
+  googlePlaceDetails Json?
   bloodDonationRequests BloodDonationRequest[]
-  User                  User[]
+  User          User[]
 
-  @@index([division, district, upazila])
+  @@index([county, subCounty, ward])
 }
 
 model BloodDonationRequest {
